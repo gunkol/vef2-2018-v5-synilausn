@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
+
+import NotFound from '../not-found';
 
 import Department from '../department';
 
+import './School.css';
+
 const url = process.env.REACT_APP_SERVICE_URL;
 
-export default class Exams extends Component {
+export default class School extends Component {
 
   static propTypes = {
     match: PropTypes.shape({
@@ -84,26 +88,32 @@ export default class Exams extends Component {
 
     const {
       school: {
-        name = '',
+        heading = '',
         departments = [],
       } = {},
     } = data;
 
+    if (!heading) {
+      return (<Route component={NotFound} />);
+    }
+
     return (
-      <div>
-        <Helmet title={name} />
-        <h2>{name}</h2>
-        {departments.map(department => (
-          <Department
-            key={department.heading}
-            name={`${department.heading}`}
-            tests={department.tests}
-            testsVisible={department.heading === visibleDepartment}
-            onClick={this.clickHandler(department.heading)}
-          />
-        ))}
+      <section className="school">
+        <Helmet title={heading} />
+        <h2 className="school__heading">{heading}</h2>
+        <div className="school__departments">
+          {departments.map(department => (
+            <Department
+              key={department.heading}
+              name={`${department.heading}`}
+              tests={department.tests}
+              testsVisible={department.heading === visibleDepartment}
+              onClick={this.clickHandler(department.heading)}
+            />
+          ))}
+        </div>
         <p><Link to="/">Heim</Link></p>
-      </div>
+      </section>
     );
   }
 }

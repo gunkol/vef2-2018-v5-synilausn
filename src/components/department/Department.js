@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Exams extends Component {
+import './Department.css';
+
+export default class Departments extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     testsVisible: PropTypes.bool,
@@ -15,26 +17,26 @@ export default class Exams extends Component {
     const icon = testsVisible ? '–' : '+';
 
     return (
-      <div>
-        <h3>
-          <button onClick={onClick}>
-            <span>{icon}</span>
+      <section className="department">
+        <h3 className="department__heading">
+          <button className="department__button" onClick={onClick}>
+            <span className="department__icon">{icon}</span>
             {name}
           </button>
         </h3>
         {testsVisible && (
-          <table>
+          <table className="table" cellSpacing="0">
             <thead>
               <tr>
                 <th>Auðkenni</th>
                 <th>Námskeið</th>
-                <th>Fjöldi nemenda</th>
+                <th>Fjöldi</th>
                 <th>Dagsetning</th>
               </tr>
             </thead>
             <tbody>
               {tests.map(test => (
-                <tr>
+                <tr key={test.course}>
                   <td>{test.course}</td>
                   <td>{test.name}</td>
                   <td>{test.students}</td>
@@ -44,7 +46,7 @@ export default class Exams extends Component {
             </tbody>
           </table>
         )}
-      </div>
+      </section>
     );
   }
 }

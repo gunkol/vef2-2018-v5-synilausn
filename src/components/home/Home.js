@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Helmet from 'react-helmet';
+
+import './Home.css';
 
 const url = process.env.REACT_APP_SERVICE_URL ;
 
@@ -35,18 +36,18 @@ export default class Home extends Component {
     const { numTests = 0, averageStudents = 0, min = 0, max = 0, numStudents = 0 } = data.stats || {} ;
 
     return (
-      <div>
-        <Helmet title="Forsíða" />
-        <dl>
-          <dt>Fjöldi prófa</dt>
+      <div className="home">
+        <h2 className="home__heading">Tölfræði</h2>
+        <dl className="home__stats">
+          <dt className="home__term">Fjöldi prófa</dt>
           <dd>{numTests}</dd>
-          <dt>Fjöldi nemenda í öllum prófum</dt>
+          <dt className="home__term">Fjöldi nemenda í öllum prófum</dt>
           <dd>{numStudents}</dd>
-          <dt>Meðalfjöldi nemenda í prófi</dt>
+          <dt className="home__term">Meðalfjöldi nemenda í prófi</dt>
           <dd>{averageStudents}</dd>
-          <dt>Minnsti fjöldi nemenda í prófi</dt>
+          <dt className="home__term">Minnsti fjöldi nemenda í prófi</dt>
           <dd>{min}</dd>
-          <dt>Mesti fjöldi nemenda í prófi</dt>
+          <dt className="home__term">Mesti fjöldi nemenda í prófi</dt>
           <dd>{max}</dd>
         </dl>
       </div>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom'
 
+import './Navigation.css';
+
 const url = process.env.REACT_APP_SERVICE_URL;
 
 export default class Navigation extends Component {
@@ -38,11 +40,17 @@ export default class Navigation extends Component {
     }
 
     return (
-      <nav>
-        <ul>
+      <nav className="navigation">
+        <ul className="navigation__list">
           {data.schools && data.schools.map((department) => (
-            <li key={department.name}>
-              <NavLink to={department.link}>{department.name}</NavLink>
+            <li className="navigation__item" key={department.name}>
+              <NavLink
+                to={department.link}
+                className="navigation__link"
+                activeClassName="navigation__link--active"
+              >
+                {department.name}
+              </NavLink>
             </li>
           ))}
         </ul>
