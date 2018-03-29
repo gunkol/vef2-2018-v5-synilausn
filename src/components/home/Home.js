@@ -7,17 +7,18 @@ const url = process.env.REACT_APP_SERVICE_URL ;
 export default class Home extends Component {
   state = {
     loading: true,
-    data: null,
+    data: {},
+    error: false,
   }
 
-  componentDidMount() {
-    this.fetchData()
-      .then((data) => {
-        this.setState({ data, loading: false });
-      })
-      .catch((error) => {
-        console.error('ERROR!', error);
-      });
+  async componentDidMount() {
+    try {
+      const data = await this.fetchData();
+      this.setState({ data, loading: false });
+    } catch (error) {
+      console.error('Error fetching stats', error);
+      this.setState({ error: true, loading: false });
+    }
   }
 
   fetchData = async () => {
@@ -33,7 +34,7 @@ export default class Home extends Component {
       return (<div>Hleð inn gögnum...</div>);
     }
 
-    const { numTests = 0, averageStudents = 0, min = 0, max = 0, numStudents = 0 } = data.stats || {} ;
+    const { numTests = 0, averageStudents = 0, min = 0, max = 0, numStudents = 0 } = data.stats;
 
     return (
       <div className="home">

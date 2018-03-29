@@ -28,7 +28,6 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </section>
-
       </main>
     );
   }

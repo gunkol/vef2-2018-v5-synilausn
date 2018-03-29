@@ -4,7 +4,6 @@ import Helmet from 'react-helmet';
 import { Route, Link } from 'react-router-dom';
 
 import NotFound from '../not-found';
-
 import Department from '../department';
 
 import './School.css';
@@ -21,35 +20,33 @@ export default class School extends Component {
     }),
   }
 
-  static defaultProps = {
-  }
-
   state = {
     data: null,
     loading: true,
     visibleDepartment: '',
   }
 
-  componentDidMount() {
-    this.fetchData()
-      .then((data) => {
-        this.setState({ data, loading: false });
-      })
-      .catch((error) => {
-        console.error('ERROR!', error);
-      });
+  async componentDidMount() {
+    try {
+      const data = await this.fetchData();
+      this.setState({ data, loading: false });
+    } catch (error) {
+      console.error('Error fetching school', error);
+      this.setState({ error: true, loading: false });
+    }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (this.props.match.params.school !== prevProps.match.params.school) {
       this.setState({ loading: true });
-      this.fetchData()
-        .then((data) => {
-          this.setState({ data, loading: false });
-        })
-        .catch((error) => {
-          console.error('ERROR!', error);
-        });
+
+      try {
+        const data = await this.fetchData();
+        this.setState({ data, loading: false });
+      } catch (error) {
+        console.error('Error fetching school', error);
+        this.setState({ error: true, loading: false });
+      }
     }
   }
 
@@ -71,7 +68,9 @@ export default class School extends Component {
     return (e) => {
       e.preventDefault();
 
-      if (this.state.visibleDepartment === department) {
+      const { visibleDepartment } = this.state;
+
+      if (visibleDepartment === department) {
         this.setState({ visibleDepartment: '' });
       } else {
         this.setState({ visibleDepartment: department });
