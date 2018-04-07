@@ -82,7 +82,11 @@ export default class School extends Component {
     const { data, loading, visibleDepartment = '' } = this.state;
 
     if (loading) {
-      return (<p>Hleð prófum...</p>);
+      return (<p>Hleð sviði...</p>);
+    }
+
+    if (error) {
+      return (<p>Villa við að hlaða sviði</p>);
     }
 
     const {
